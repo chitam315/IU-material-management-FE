@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-// import { PATH } from "../../config/PATH.JS";
-import { PATH } from "/src/config/PATH.JS";
+import { PATH } from "../../config/PATH.JS";
+// import { PATH } from "src/config/PATH.JS";
 
 // import Button from "../Button";
 import "./style.scss";
