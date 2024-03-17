@@ -31,6 +31,12 @@ const ChatPage = () => {
         connectToWs()
       }, 1000);
     })
+
+    return () => {
+      if (ws.readyState === 1) { // <-- This is important
+          ws.close();
+      }
+  }
   }
 
 
