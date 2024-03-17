@@ -20,23 +20,23 @@ const ChatPage = () => {
     // connectToWs()
     connectToWs()
   }, [selectedUserId])
-  console.log('selected user id when re-render : ',selectedUserId);
   function connectToWs() {
+    console.log('connect to server');
     const ws = new WebSocket(CHAT_SERVER, ['draft', `${user.id}`, `${user.username}`])
     setWs(ws);
     ws.addEventListener('message', handleMessage);
-    ws.addEventListener('close', () => {
-      setTimeout(() => {
-        console.log('Disconnected. Trying to reconnect');
-        connectToWs()
-      }, 1000);
-    })
+    // ws.addEventListener('close', () => {
+    //   setTimeout(() => {
+    //     console.log('Disconnected. Trying to reconnect');
+    //     connectToWs()
+    //   }, 1000);
+    // })
 
     return () => {
       if (ws.readyState === 1) { // <-- This is important
-          ws.close();
+        ws.close();
       }
-  }
+    }
   }
 
 
@@ -45,8 +45,6 @@ const ChatPage = () => {
     if ('online' in messageData) {
       showOnlinePeople(messageData.online)
     } else {
-      console.log('sender is ',messageData.sender);
-      console.log('selectedUserId when receive message is : ',selectedUserId);
       if (messageData.sender == selectedUserId) {
         setMessages(prev => ([...prev, { ...messageData }]));
       }
@@ -69,7 +67,6 @@ const ChatPage = () => {
       text: newMessageText,
     }));
     setNewMessageText('')
-    console.log('selected user id when send message : ', selectedUserId);
 
     setMessages(prev => ([...prev, {
       text: newMessageText,
@@ -84,7 +81,6 @@ const ChatPage = () => {
     if (div) {
       div.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-    console.log('selected user id from scroll : ',selectedUserId);
   }, [messages]);
 
   useEffect(() => {
@@ -106,7 +102,6 @@ const ChatPage = () => {
         setMessages(res.messages)
       })
     }
-    console.log('selected user id currently is : ',selectedUserId);
   }, [selectedUserId])
 
   const onlinePeopleExclOurUser = { ...onlinePeople }
@@ -127,7 +122,7 @@ const ChatPage = () => {
                     id={userId}
                     online={true}
                     username={onlinePeopleExclOurUser[userId]}
-                    onClick={() => setSelectedUserId(userId) }
+                    onClick={() => setSelectedUserId(userId)}
                     selected={userId === selectedUserId} />
                 ))}
                 {Object.keys(offlinePeople).map(userId => (
@@ -186,7 +181,7 @@ const ChatPage = () => {
           <form className="flex gap-2" onSubmit={(ev) => sendMessage(ev)}>
             <input type="text"
               value={newMessageText}
-              onChange={ev => {setNewMessageText(ev.target.value);}}
+              onChange={ev => { setNewMessageText(ev.target.value); }}
               placeholder="Type your message here"
               className="bg-white flex-grow border rounded-sm p-2" />
             <button type="submit" className="bg-blue-500 p-2 text-white rounded-sm">
