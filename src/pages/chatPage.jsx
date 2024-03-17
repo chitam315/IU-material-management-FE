@@ -4,7 +4,7 @@ import ContactCard from '../components/ContactCard/ContactCard'
 import { useFetch } from '../hooks/useFetch'
 // import {messageService} from '../services/message.service'
 import { uniqBy } from "lodash";
-import { AUTHENTICATION_API, MESSAGE_API, api } from '../config/api'
+import { AUTHENTICATION_API, MESSAGE_API, api, CHAT_SERVER } from '../config/api'
 
 
 const ChatPage = () => {
@@ -22,7 +22,7 @@ const ChatPage = () => {
   }, [selectedUserId])
   console.log('selected user id when re-render : ',selectedUserId);
   function connectToWs() {
-    const ws = new WebSocket('ws://localhost:8080/', ['draft', `${user.id}`, `${user.username}`])
+    const ws = new WebSocket(CHAT_SERVER, ['draft', `${user.id}`, `${user.username}`])
     setWs(ws);
     ws.addEventListener('message', handleMessage);
     ws.addEventListener('close', () => {

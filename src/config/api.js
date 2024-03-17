@@ -11,6 +11,7 @@ const THESIS_API = import.meta.env.VITE_THESIS_API;
 const FILE_API = import.meta.env.VITE_FILE_API
 const ANNOUNCEMENT_API = import.meta.env.VITE_ANNOUNCEMENT_API
 const MESSAGE_API = import.meta.env.VITE_MESSAGE_API
+const CHAT_SERVER = import.meta.env.VITE_CHAT_SERVER
 
 const api = axios.create()
 
@@ -50,4 +51,4 @@ api.interceptors.request.use((config) => {
     return config
 })
 
-export { api, COURSE_API, AUTHENTICATION_API, ADMIN_API, THESIS_API, FILE_API, ANNOUNCEMENT_API, MESSAGE_API }
+export { api, COURSE_API, AUTHENTICATION_API, ADMIN_API, THESIS_API, FILE_API, ANNOUNCEMENT_API, MESSAGE_API, CHAT_SERVER }
