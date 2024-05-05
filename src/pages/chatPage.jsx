@@ -24,19 +24,21 @@ const ChatPage = () => {
     console.log('connect to server');
     const ws = new WebSocket(CHAT_SERVER, ['draft', `${user.id}`, `${user.username}`])
     setWs(ws);
+    // ws.onclose(() => {console.log('server chat close');})
     ws.addEventListener('message', handleMessage);
-    // ws.addEventListener('close', () => {
-    //   setTimeout(() => {
-    //     console.log('Disconnected. Trying to reconnect');
-    //     connectToWs()
-    //   }, 1000);
-    // })
+    ws.addEventListener('close', () => {
+      console.log('server chat close');
+      setTimeout(() => {
+        console.log('Disconnected. Trying to reconnect');
+        connectToWs()
+      }, 1000);
+    })
 
-    return () => {
-      if (ws.readyState === 1) { // <-- This is important
-        ws.close();
-      }
-    }
+    // return () => {
+    //   if (ws.readyState === 1) { // <-- This is important
+    //     ws.close();
+    //   }
+    // }
   }
 
 
